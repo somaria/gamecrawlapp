@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'widgets/home/buildList.dart';
 import './widgets/home/buildbody.dart';
+import './widgets/home/sidedrawer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Gamecrawl')),
+      drawer: SideDrawer(),
       body: BuildBody(context: context),
     );
   }
