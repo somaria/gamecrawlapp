@@ -13,6 +13,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.blue.shade800,
+        accentColor: Colors.green,
+        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.purple)),
+      ),
       title: 'Gamecrawl',
       home: Home(),
     );

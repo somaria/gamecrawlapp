@@ -7,6 +7,7 @@ class Post {
   final String ytTitle;
   final int noOfVotes;
   final String ytImageUrl;
+  final String pid;
   final DocumentReference reference;
 
   Post.fromMap(Map<String, dynamic> map, {this.reference})
@@ -14,7 +15,8 @@ class Post {
         username = map['username'],
         ytTitle = map['ytTitle'],
         ytImageUrl = map['ytImageUrl'],
-        noOfVotes = map['noOfVotes'];
+        noOfVotes = map['noOfVotes'],
+        pid = map['pid'];
 
   Post.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data(), reference: snapshot.reference);

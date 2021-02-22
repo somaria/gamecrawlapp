@@ -1,17 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamecrawlapp/widgets/dashboard/boardbody.dart';
 import 'package:get/get.dart';
 import '../widgets/home/sidedrawer.dart';
 import '../pages/login.dart';
-import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:youtube_parser/youtube_parser.dart';
 
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -45,11 +43,7 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
+  getUserId() {
     _auth.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
@@ -58,11 +52,20 @@ class _DashboardState extends State<Dashboard> {
       } else {
         print('User is signed in!');
         uid = _auth.currentUser.uid;
+        print(uid);
         photourl = _auth.currentUser.photoURL;
 
         getUsername(uid);
       }
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getUserId();
   }
 
   final textController = TextEditingController();
@@ -139,7 +142,8 @@ class _DashboardState extends State<Dashboard> {
       "photourl": photourl,
       "pid": postId,
       "uid": uid,
-      "noOfVotes": 0
+      "noOfVotes": 0,
+      "recommendation": false
     }).then((value) {
       print("successfully posted the video");
       setState(() {});
@@ -162,7 +166,21 @@ class _DashboardState extends State<Dashboard> {
 
       String ytid = getIdFromUrl(yturl);
 
+      print("the ytid");
       print(ytid);
+
+      if (ytid == null) {
+        print("no ytid");
+        Fluttertoast.showToast(
+            msg: "Please input a youtube url",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 4,
+            backgroundColor: Colors.red.shade50,
+            textColor: Colors.black,
+            fontSize: 24.0);
+        return;
+      }
 
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('posts')
@@ -194,47 +212,45 @@ class _DashboardState extends State<Dashboard> {
         title: Text('Dashboard'),
       ),
       drawer: SideDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              decoration:
-                  InputDecoration(hintText: 'https://youtu.be/zVGjcT-w2R0'),
-              controller: textController,
+      body: Column(
+        children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 32, bottom: 8, left: 32, right: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  decoration:
+                      InputDecoration(hintText: 'https://youtu.be/zVGjcT-w2R0'),
+                  controller: textController,
+                ),
+                SizedBox(
+                  height: 28,
+                ),
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.red)),
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  disabledColor: Colors.grey,
+                  disabledTextColor: Colors.black,
+                  padding: EdgeInsets.all(12.0),
+                  splashColor: Colors.blueAccent,
+                  onPressed: () {
+                    getYoutubeId();
+                  },
+                  child: Text(
+                    "Submit A Video",
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 28,
-            ),
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.red)),
-              color: Colors.blue,
-              textColor: Colors.white,
-              disabledColor: Colors.grey,
-              disabledTextColor: Colors.black,
-              padding: EdgeInsets.all(12.0),
-              splashColor: Colors.blueAccent,
-              onPressed: () {
-                getYoutubeId();
-              },
-              child: Text(
-                "Submit A Video",
-                style: TextStyle(fontSize: 20.0),
-              ),
-            ),
-            SizedBox(
-              height: 36,
-            ),
-            ListTile(
-              leading: Text('Leading'),
-              title: Text('Title'),
-              dense: false,
-            ),
-          ],
-        ),
+          ),
+          BoardBody(uid: uid),
+        ],
       ),
     );
   }

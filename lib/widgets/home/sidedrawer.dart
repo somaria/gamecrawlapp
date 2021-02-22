@@ -31,31 +31,41 @@ class SideDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('Gamecrawl'),
+            child: Text(
+              'Gamecrawl',
+              style: TextStyle(fontSize: 32),
+            ),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.blue.shade800,
             ),
           ),
           ListTile(
-            title: Text('Home'),
+            title: Text(
+              'Home',
+              style: TextStyle(fontSize: 20),
+            ),
             onTap: () {
               Get.offAll(() => Home());
             },
           ),
           ListTile(
-            title: Text('Dashboard'),
+            title: Text('Dashboard', style: TextStyle(fontSize: 20)),
             onTap: () {
               Get.offAll(() => Dashboard());
             },
           ),
           ListTile(
-            title: Text('Login'),
+            title: Text('Login',
+                style: TextStyle(
+                    fontSize: 20, color: Colors.black.withOpacity(0.5))),
             onTap: () {
               Get.offAll(() => Login());
             },
           ),
           ListTile(
-            title: Text('Logout'),
+            title: Text('Logout',
+                style: TextStyle(
+                    fontSize: 20, color: Colors.black.withOpacity(0.5))),
             onTap: () {
               signOutGoogle();
             },
