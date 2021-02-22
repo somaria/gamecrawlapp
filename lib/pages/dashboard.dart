@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' as dio;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,27 +19,6 @@ import 'dart:convert' as convert;
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
-
-// Define a custom Form widget.
-
-class Post {
-  final String kind;
-  final Map<String, dynamic> items;
-  Post({this.kind, this.items});
-
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(kind: json['kind'], items: json['items']);
-  }
-}
-
-// class Item {
-//   final String kind;
-//   Item({this.kind});
-//
-//   factory Item.fromJson(Map<String, dynamic> json) {
-//     return Item(kind: json['items']['kind']);
-//   }
-// }
 
 class Dashboard extends StatefulWidget {
   @override
@@ -166,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
       print("successfully posted the video");
       setState(() {});
       Fluttertoast.showToast(
-          msg: "This gameplay has been posted successfully",
+          msg: "Gameplay posted successfully",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 4,
@@ -197,7 +175,7 @@ class _DashboardState extends State<Dashboard> {
         print("doc is found");
         // getFromYoutube("8DRbRRmck04");
         Fluttertoast.showToast(
-            msg: "This video has already been posted",
+            msg: "This gameplay has already been posted",
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 4,
@@ -222,8 +200,8 @@ class _DashboardState extends State<Dashboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              decoration: InputDecoration(
-                  hintText: 'https://www.youtube.com/watch?v=2SSx8O2grNg'),
+              decoration:
+                  InputDecoration(hintText: 'https://youtu.be/zVGjcT-w2R0'),
               controller: textController,
             ),
             SizedBox(
@@ -246,7 +224,15 @@ class _DashboardState extends State<Dashboard> {
                 "Submit A Video",
                 style: TextStyle(fontSize: 20.0),
               ),
-            )
+            ),
+            SizedBox(
+              height: 36,
+            ),
+            ListTile(
+              leading: Text('Leading'),
+              title: Text('Title'),
+              dense: false,
+            ),
           ],
         ),
       ),
