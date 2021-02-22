@@ -33,6 +33,10 @@ dependencies:
   firebase_auth:
   get:
   google_sign_in:
+  youtube_parser:
+  fluttertoast:
+  dio:
+  http:
 
 dev_dependencies:
   flutter_test:
