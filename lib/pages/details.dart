@@ -61,27 +61,51 @@ class _DetailsState extends State<Details> {
           appBar: AppBar(
             title: Text("Gamecrawl"),
           ),
-          body: Column(
-            children: [
-              player,
-              SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  post.ytTitle,
-                  style: TextStyle(fontSize: 24, color: Colors.black87),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                player,
+                SizedBox(
+                  height: 16,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  post.ytDescription,
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        post.ytTitle,
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 14,
+                      ),
+                      Text(
+                        post.ytChannelTitle,
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        post.ytDescription,
+                        style: TextStyle(fontSize: 20, color: Colors.black87),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
