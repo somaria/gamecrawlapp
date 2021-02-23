@@ -36,6 +36,7 @@ dependencies:
   youtube_parser:
   fluttertoast:
   http:
+  youtube_player_flutter:
 
 dev_dependencies:
   flutter_test:

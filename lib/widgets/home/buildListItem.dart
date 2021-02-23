@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamecrawlapp/pages/details.dart';
+import 'package:get/get.dart';
 import '../../models/post.dart';
 
 class BuildListItem extends StatelessWidget {
@@ -34,7 +36,12 @@ class BuildListItem extends StatelessWidget {
               width: 80,
             ),
           ),
-          title: Text(post.ytTitle),
+          title: GestureDetector(
+            child: Text(post.ytTitle),
+            onTap: () {
+              Get.to(Details(), arguments: {'post': post});
+            },
+          ),
           trailing: Text(post.noOfVotes.toString()),
         ),
       ),
