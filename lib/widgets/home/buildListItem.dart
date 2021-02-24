@@ -42,6 +42,7 @@ class BuildListItem extends StatelessWidget {
               Get.to(Details(), arguments: {'post': post});
             },
           ),
+          subtitle: Text(post.ytChannelTitle),
           trailing: Text(post.noOfVotes.toString()),
         ),
       ),

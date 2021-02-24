@@ -31,41 +31,111 @@ class SideDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
-              'Gamecrawl',
-              style: TextStyle(fontSize: 32),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.videogame_asset_outlined,
+                  color: Colors.white70,
+                  semanticLabel: 'Double tap to delete',
+                  size: 32,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  'Gamecrawl',
+                  style: TextStyle(fontSize: 32, color: Colors.white70),
+                ),
+              ],
             ),
             decoration: BoxDecoration(
               color: Colors.blue.shade800,
             ),
           ),
           ListTile(
-            title: Text(
-              'Home',
-              style: TextStyle(fontSize: 20),
+            title: Row(
+              children: [
+                Icon(
+                  Icons.home,
+                  color: Colors.blueGrey,
+                  semanticLabel: 'Double tap to delete',
+                  size: 24,
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Text(
+                  'Home',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ],
             ),
             onTap: () {
               Get.offAll(() => Home());
             },
           ),
           ListTile(
-            title: Text('Dashboard', style: TextStyle(fontSize: 20)),
+            title: Row(
+              children: [
+                Icon(
+                  Icons.settings_applications,
+                  color: Colors.blueGrey,
+                  semanticLabel: 'Double tap to delete',
+                  size: 24,
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Text('Dashboard', style: TextStyle(fontSize: 20)),
+              ],
+            ),
             onTap: () {
               Get.offAll(() => Dashboard());
             },
           ),
           ListTile(
-            title: Text('Login',
-                style: TextStyle(
-                    fontSize: 20, color: Colors.black.withOpacity(0.5))),
+            title: Row(
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.login_outlined,
+                      color: Colors.blueGrey,
+                      semanticLabel: 'Double tap to delete',
+                      size: 24,
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Text('Login',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black.withOpacity(0.5))),
+                  ],
+                ),
+              ],
+            ),
             onTap: () {
               Get.offAll(() => Login());
             },
           ),
           ListTile(
-            title: Text('Logout',
-                style: TextStyle(
-                    fontSize: 20, color: Colors.black.withOpacity(0.5))),
+            title: Row(
+              children: [
+                Icon(
+                  Icons.login_outlined,
+                  color: Colors.blueGrey,
+                  semanticLabel: 'Double tap to delete',
+                  size: 24,
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Text('Logout',
+                    style: TextStyle(
+                        fontSize: 20, color: Colors.black.withOpacity(0.5))),
+              ],
+            ),
             onTap: () {
               signOutGoogle();
             },
