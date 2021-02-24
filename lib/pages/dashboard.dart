@@ -26,7 +26,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   var username = "";
   var photourl = "";
-  var uid = "";
+  var uid = null;
 
   void getUsername(uid) async {
     final QuerySnapshot result = await FirebaseFirestore.instance
@@ -48,10 +48,13 @@ class _DashboardState extends State<Dashboard> {
       if (user == null) {
         print('User is currently signed out!');
 
-        Get.offAll(Login());
+        Get.offAll(() => Login());
       } else {
         print('User is signed in!');
-        uid = _auth.currentUser.uid;
+        setState(() {
+          uid = _auth.currentUser.uid;
+        });
+
         print(uid);
         photourl = _auth.currentUser.photoURL;
 
@@ -249,7 +252,7 @@ class _DashboardState extends State<Dashboard> {
               ],
             ),
           ),
-          BoardBody(uid: uid),
+          (uid != null) ? BoardBody(uid: uid) : Text(""),
         ],
       ),
     );

@@ -9,7 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-// final GoogleSignIn googleSignIn = GoogleSignIn();
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({
@@ -18,7 +18,7 @@ class SideDrawer extends StatelessWidget {
 
   Future<void> signOutGoogle() async {
     _auth.signOut();
-    // await googleSignIn.signOut();
+    await googleSignIn.signOut();
     print("User Signed Out");
     Get.offAll(() => Home());
   }

@@ -11,8 +11,51 @@ import '../pages/dashboard.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
-Future<String> signInWithGoogle() async {
-  await Firebase.initializeApp();
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+  // Create a new credential
+  final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+
+  final UserCredential authResult =
+      await _auth.signInWithCredential(credential);
+
+  if (authResult.additionalUserInfo.isNewUser) {
+    final db = FirebaseFirestore.instance;
+    final data = authResult;
+    db.collection("users").doc(authResult.user.uid).set({
+      'email': data.user.email,
+      'name': data.user.displayName,
+      'photourl': data.user.photoURL,
+      'uid': data.user.uid,
+      'username': data.user.uid,
+      'ytchannelurl': "https://youtube.com/c/gamecrawl",
+      'twitter': "https://twitter.com/xgamecrawl",
+      'facebook': "https://facebook.com/gamecrawl",
+      'twitch': "https://twitch.tv/gamecrawlx",
+      'instagram': "https://instagram.com/gamecrawl/",
+      'bio': "A gamer",
+      'createdAt': DateTime.now().millisecondsSinceEpoch,
+      'votes': []
+    });
+  } else {
+    print("not new user");
+  }
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+
+Future<String> signInWithGoogle2() async {
+  // await Firebase.initializeApp();
+  print("tapping 2");
 
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
   final GoogleSignInAuthentication googleSignInAuthentication =
@@ -62,13 +105,11 @@ Future<String> signInWithGoogle() async {
 
     return '$user';
   }
-
   return null;
 }
 
 Future<void> signOutGoogle() async {
   await googleSignIn.signOut();
-
   print("User Signed Out");
 }
 
@@ -118,6 +159,7 @@ class _LoginState extends State<Login> {
               splashColor: Colors.blueAccent,
               onPressed: () {
                 signInWithGoogle();
+                print("tapping...");
               },
               child: Text(
                 "Sign In With Google",
